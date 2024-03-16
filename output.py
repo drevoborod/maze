@@ -12,4 +12,3 @@ def draw_field(f: Field):
         for cell in row:
             print(FIELD_CELLS[cell.state], end="")
         print()
-        dict()

@@ -44,6 +44,7 @@ class Field:
     def set_cell_state(self, *args: tuple[int, int], state: CellCondition): ...
 
     def set_cell_state(self, *args, state=None):
+        error_message = "Incorrect signature"
         match args:
             case int(x), int(y), CellCondition() as state:
                 self(x, y).state = state
@@ -52,11 +53,11 @@ class Field:
                     self(x, y).state = state
             case (int(), int()), *_:
                 if not state:
-                    raise TypeError("Incorrect signature")
+                    raise TypeError(error_message)
                 for x, y in args:
                     self(x, y).state = state
             case _:
-                raise TypeError("Incorrect signature")
+                raise TypeError(error_message)
 
     def is_cell_accessible(self, x, y):
         if self(x, y).state == CellCondition.passable:
@@ -64,7 +65,10 @@ class Field:
         return False
 
     def __call__(self, x, y):
-        return self._grid[y-1][x-1]
+        try:
+            return self._grid[y-1][x-1]
+        except IndexError:
+            raise ValueError(f"Cell coordinates ({x=}, {y=}) are out of bounds")
 
     def __iter__(self):
         return iter(self._grid)
