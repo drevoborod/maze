@@ -32,10 +32,9 @@ class RunTimeout:
 
 
 # ToDo: replace with pytest-based realization and use its parametrization.
-class TestRouteDraw(TestCase):
+class TestRouteDrawTime(TestCase):
     """
-    Tests how route is being drawn.
-    At the moment, only time required for calculation is being checked.
+    Tests how long route is being drawn.
 
     """
     def setUp(self):
