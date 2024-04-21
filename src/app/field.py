@@ -2,6 +2,9 @@ from enum import Enum
 from typing import overload, Self
 
 
+GLOBAL_COUNTER = dict()
+
+
 class PositionError(Exception): pass
 
 
@@ -37,12 +40,20 @@ class Cell:
         return self.state == CellCondition.passable
 
     def __eq__(self, other: tuple[int, int] | Self):
+        ### Debug
+        # global GLOBAL_COUNTER
+        # GLOBAL_COUNTER[(self._x, self._y)] = GLOBAL_COUNTER.get((self._x, self._y), 0) + 1
+        ###
         if isinstance(other, Cell):
             return self() == other()
         else:
             return self() == other
 
     def __call__(self, *args, **kwargs) -> tuple[int, int]:
+        ### Debug
+        global GLOBAL_COUNTER
+        GLOBAL_COUNTER[(self._x, self._y)] = GLOBAL_COUNTER.get((self._x, self._y), 0) + 1
+        ###
         return self.x, self.y
 
     def __hash__(self):
@@ -50,6 +61,10 @@ class Cell:
 
 
 class Field:
+    """
+    Playing field consistent of Cell instances. X and Y indexes (width and height) start with 1.
+    """
+
     def __init__(self):
         self.x = 0
         self.y = 0
@@ -72,6 +87,12 @@ class Field:
     def set_cell_state(self, *args: tuple[int, int], state: CellCondition): ...
 
     def set_cell_state(self, *args, state=None):
+        """
+        Change state of one or many cells.
+
+        :param args:
+        :param state:
+        """
         error = TypeError("Incorrect signature")
         match args:
             case int(x), int(y), CellCondition() as state:
@@ -89,11 +110,8 @@ class Field:
         for route in self._routes:
             route.reset()
 
-    def register_route(self, route):
-        # ToDo: rethink this approach: it requires circular import.
-        self._routes.append(route)
-
     def __call__(self, x: int, y: int) -> Cell:
+        #
         try:
             return self._grid[y-1][x-1]
         except IndexError:

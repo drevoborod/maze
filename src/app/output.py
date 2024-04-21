@@ -1,14 +1,15 @@
-from field import CellCondition, Field
-from route import Route
+from .field import CellCondition, Field
+from .route import Route
 
 
 FIELD_CELLS = {
     CellCondition.passable: "[ ]",
     CellCondition.blocked: "[▇]"
 }
-WAYPOINT = "[@]"
+WAYPOINT = "[*]"
 START = "[S]"
 FINISH = "[F]"
+
 
 def draw_field(f: Field):
     for row in f:
