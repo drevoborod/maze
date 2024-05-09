@@ -1,8 +1,10 @@
 from enum import Enum
 from typing import overload, Self
 
-
-GLOBAL_COUNTER = dict()
+### Debug:
+from . import GLOBAL_CELL_CALL_COUNTER
+GLOBAL_CELL_CALL_COUNTER = GLOBAL_CELL_CALL_COUNTER
+###
 
 
 class PositionError(Exception): pass
@@ -51,13 +53,16 @@ class Cell:
 
     def __call__(self, *args, **kwargs) -> tuple[int, int]:
         ### Debug
-        global GLOBAL_COUNTER
-        GLOBAL_COUNTER[(self._x, self._y)] = GLOBAL_COUNTER.get((self._x, self._y), 0) + 1
+        global GLOBAL_CELL_CALL_COUNTER
+        GLOBAL_CELL_CALL_COUNTER[(self._x, self._y)] = GLOBAL_CELL_CALL_COUNTER.get((self._x, self._y), 0) + 1
         ###
         return self.x, self.y
 
     def __hash__(self):
         return hash(self())
+
+    def __str__(self):
+        return str(self())
 
 
 class Field:
@@ -120,3 +125,5 @@ class Field:
     def __iter__(self):
         return iter(self._grid)
 
+    def __len__(self):
+        return len(self._grid)

@@ -56,7 +56,7 @@ class Route:
         while True:
             if self.finish == current_cell:
                 return path
-            # saving current sell state to check later if it changed:
+            # saving current sell state to check later if it was changed:
             previous_cell = current_cell
             for new_coords in (
                 (current_cell.x + 1, current_cell.y),
@@ -67,18 +67,15 @@ class Route:
                 if self._check_cell(new_coords, path, blacklist):
                     path.append(current_cell)
                     current_cell = self._field(*new_coords)
-                    ### Debug:
-                    # draw_route(self, path, current_cell)
-                    # print()
-                    ###
                     break
                 else:
                     try:
                         blacklist.add(self._field(*new_coords))
                     except PositionError:
                         pass
-            # if we made no step forward, add current cell to blacklist and make step backwards:
+            # if we made no step forward, add current and previous cell to blacklist and make step backwards:
             if previous_cell is current_cell:
+                blacklist.add(current_cell)
                 blacklist.add(path.pop())
                 current_cell = path[-1]
 
