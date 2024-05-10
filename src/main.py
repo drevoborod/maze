@@ -24,7 +24,11 @@ if __name__ == "__main__":
     # for x in range(8, 19):
     #     f.set_cell_state(x, 6, CellCondition.blocked)
 
-    ## Increase complexity 3:
+    # Increase complexity 3:
+    # for x in range(8, 20):
+    #     f.set_cell_state(x, 6, CellCondition.blocked)
+
+    ## Increase complexity 4:
     for x in range(8, 21):
         f.set_cell_state(x, 6, CellCondition.blocked)
     for x in range(2, 6):
@@ -38,13 +42,13 @@ if __name__ == "__main__":
     print()
 
     # Regular route:
-    r = Route(f, f(4, 4), f(16, 12))
+    # r = Route(f, f(4, 4), f(16, 12))
     # Regular route 2:
     # r = Route(f, f(4, 4), f(6, 12))
     # Reversed route:
     # r = Route(f, f(16, 12), f(4, 4))
     # Reversed route 2:
-    # r = Route(f, f(6, 12), f(4, 4))
+    r = Route(f, f(6, 12), f(4, 4))
 
     draw_route(r)   # draw a field with route on it
 
