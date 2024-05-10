@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # ToDo: Fix bug: why some steps are duplicated? Maybe it's ok?
     # Locating duplicated cells in route:
     excl_dict = {}
-    for number, cell in enumerate(r.path):
+    for number, cell in enumerate(r.path, 1):
         excl_dict[cell] = excl_dict.get(cell, []) + [number]
     for key, value in excl_dict.items():
         if len(value) > 1:

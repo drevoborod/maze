@@ -40,9 +40,8 @@ def draw_route(route: Route):
                 point = CELL_TEMPLATE.format(START_CHAR)
             elif cell == route.finish:
                 point = CELL_TEMPLATE.format(FINISH_CHAR)
-            elif cell in route.path:
-                #point = CELL_TEMPLATE.format(WAYPOINT_CHAR)
-                point = CELL_TEMPLATE.format(route.path.index(cell))
+            elif position := route.path_position(cell.x, cell.y):
+                point = CELL_TEMPLATE.format(position)
             else:
                 point = FIELD_CELLS[cell.state]
             print(point, end="")

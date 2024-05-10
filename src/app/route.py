@@ -5,6 +5,8 @@ class Route:
     def __init__(self, field: Field, start: Cell, finish: Cell):
         self._field = field
         self._path: list[Cell] = []
+        # path represented like this: {x: {y: position_in_path_list}}:
+        self._subscriptable_path: dict[int, dict[int, int]] = {}
         self._start: Cell = start
         self._finish: Cell = finish
 
@@ -42,11 +44,43 @@ class Route:
         return self._path
 
     @property
+    def subscriptable_path(self) -> dict[int, dict[int, int]]:
+        """
+        Position in path can be obtained by subscripting using [x][y]:
+        position = subscriptable_path()[5][10]
+        Position numbers start with 1.
+
+        """
+        if not self._subscriptable_path:
+            self._subscriptable_path = self._cells_list_to_dict(self.path)
+        return self._subscriptable_path
+
+    @property
     def field(self) -> Field:
         return self._field
 
+    def path_position(self, x: int, y: int) -> int | bool:
+        """
+        Returns position number in path by coordinates. Position numbers start with 1.
+        If no such coordinates exist in path, returns False.
+
+        """
+        try:
+            return self.subscriptable_path[x][y]
+        except KeyError:
+            return False
+
     def reset(self):
-        self._path = set()
+        self._path = []
+        self._subscriptable_path = {}
+
+    @staticmethod
+    def _cells_list_to_dict(path: list[Cell]) -> dict[int, dict[int, int]]:
+        result = {}
+        for number, cell in enumerate(path, 1):
+            result[cell.x] = result.get(cell.x, {})
+            result[cell.x][cell.y] = number
+        return result
 
     def _calculate_path(self) -> list[Cell]:
         current_cell = self.start
