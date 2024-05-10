@@ -116,11 +116,17 @@ class Field:
             route.reset()
 
     def __call__(self, x: int, y: int) -> Cell:
-        #
+        """
+        Get specific cell from the field by coordinates.
+
+        """
+        error = PositionError(f"Cell coordinates ({x=}, {y=}) are out of bounds")
+        if x < 1 or y < 1:
+            raise error
         try:
             return self._grid[y-1][x-1]
         except IndexError:
-            raise PositionError(f"Cell coordinates ({x=}, {y=}) are out of bounds")
+            raise error
 
     def __iter__(self):
         return iter(self._grid)

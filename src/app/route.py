@@ -98,7 +98,7 @@ class Route:
                 (current_cell.x - 1, current_cell.y),
                 (current_cell.x, current_cell.y - 1)
             ):
-                if self._check_cell(new_coords, path, blacklist):
+                if self._cell_can_be_used(new_coords, path, blacklist):
                     path.append(current_cell)
                     current_cell = self._field(*new_coords)
                     break
@@ -113,7 +113,7 @@ class Route:
                 blacklist.add(path.pop())
                 current_cell = path[-1]
 
-    def _check_cell(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
+    def _cell_can_be_used(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
         # check that we are not out of bounds:
         try:
             cell = self._field(*coords)
@@ -121,9 +121,6 @@ class Route:
             return False
         if cell == self.finish:
             return True
-        # # check that the cell is not previous cell in the path:
-        # if cell == path[-1]:
-        #     return False
         if cell in path:
             return False
 
