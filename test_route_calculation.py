@@ -84,3 +84,29 @@ class TestRouteDrawTime(TestCase):
         r = Route(self.field, self.field(4, 4), self.field(6, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
+
+
+class TestRouteMisc(TestCase):
+    """
+    Tests different aspects of route creation.
+
+    """
+    def setUp(self):
+        self.field = Field().build(20, 20)
+        for x in range(3, 6):
+            self.field.set_cell_state(x, 5, CellCondition.blocked)
+        for y in range(7, 18):
+            self.field.set_cell_state(8, y, CellCondition.blocked)
+        self.field.set_cell_state((3, 4), (5, 4), (3, 3), (5, 3), CellCondition.blocked)
+
+    def test_no_duplicates_in_route(self):
+        for x in range(8, 21):
+            self.field.set_cell_state(x, 6, CellCondition.blocked)
+        for x in range(2, 6):
+            self.field.set_cell_state(x, 12, CellCondition.blocked)
+        for y in range(7, 12):
+            self.field.set_cell_state(4, y, CellCondition.blocked)
+        for y in range(1, 5):
+            self.field.set_cell_state(13, y, CellCondition.blocked)
+        r = Route(self.field, self.field(6, 12), self.field(4, 4))
+        assert len(r.path) == len(set(r.path))

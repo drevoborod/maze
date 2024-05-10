@@ -86,7 +86,7 @@ class Route:
 
     def _calculate_path(self) -> list[Cell]:
         current_cell = self.start
-        path = []
+        path = [current_cell]
         blacklist = set()
 
         while True:
@@ -94,6 +94,8 @@ class Route:
                 return path
             # saving current sell state to check later if it was changed:
             previous_cell = current_cell
+            if current_cell == (12, 5):
+                pass
             for new_coords in (
                 (current_cell.x + 1, current_cell.y),
                 (current_cell.x, current_cell.y + 1),
@@ -101,7 +103,8 @@ class Route:
                 (current_cell.x, current_cell.y - 1)
             ):
                 if self._cell_can_be_used(new_coords, path, blacklist):
-                    path.append(current_cell)
+                    if path[-1] != current_cell:    # to avoid duplicates when returning to previously visited cell
+                        path.append(current_cell)
                     current_cell = self._field(*new_coords)
                     break
                 else:
@@ -124,8 +127,6 @@ class Route:
 
         if cell == self.finish:
             return True
-        if cell == self.start:
-            return False
         if cell in path:
             return False
         # check whether this cell has been checked already or not:

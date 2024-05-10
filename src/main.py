@@ -24,22 +24,22 @@ if __name__ == "__main__":
     #     f.set_cell_state(x, 6, CellCondition.blocked)
 
     # Increase complexity 2:
-    # for x in range(8, 19):
-    #     f.set_cell_state(x, 6, CellCondition.blocked)
+    for x in range(8, 19):
+        f.set_cell_state(x, 6, CellCondition.blocked)
 
     # Increase complexity 3:
-    # for x in range(8, 20):
-    #     f.set_cell_state(x, 6, CellCondition.blocked)
+    for x in range(8, 20):
+        f.set_cell_state(x, 6, CellCondition.blocked)
 
     # Increase complexity 4:
-    for x in range(8, 21):
-        f.set_cell_state(x, 6, CellCondition.blocked)
-    for x in range(2, 6):
-        f.set_cell_state(x, 12, CellCondition.blocked)
-    for y in range(7, 12):
-        f.set_cell_state(4, y, CellCondition.blocked)
-    for y in range(1, 5):
-        f.set_cell_state(13, y, CellCondition.blocked)
+    # for x in range(8, 21):
+    #     f.set_cell_state(x, 6, CellCondition.blocked)
+    # for x in range(2, 6):
+    #     f.set_cell_state(x, 12, CellCondition.blocked)
+    # for y in range(7, 12):
+    #     f.set_cell_state(4, y, CellCondition.blocked)
+    # for y in range(1, 5):
+    #     f.set_cell_state(13, y, CellCondition.blocked)
 
     ## Drawing just a field with obstacles:
     draw_field(f)
@@ -66,15 +66,6 @@ if __name__ == "__main__":
     print()
     draw_route(r)
     print()
-
-    # ToDo: Fix bug: why some steps are duplicated? Maybe it's ok?
-    # Locating duplicated cells in route:
-    excl_dict = {}
-    for number, cell in enumerate(r.path, 1):
-        excl_dict[cell] = excl_dict.get(cell, []) + [number]
-    for key, value in excl_dict.items():
-        if len(value) > 1:
-            print(f"Cell: {key}, Positions in path: {', '.join(map(str, value))}")
     ###
 
 
