@@ -17,12 +17,23 @@ if __name__ == "__main__":
         f.set_cell_state(8, y, CellCondition.blocked)
 
     # Increase complexity:
-    for x in range(8, 21):
-        f.set_cell_state(x, 6, CellCondition.blocked)
+    # for x in range(8, 21):
+    #     f.set_cell_state(x, 6, CellCondition.blocked)
 
     # Increase complexity 2:
     # for x in range(8, 19):
     #     f.set_cell_state(x, 6, CellCondition.blocked)
+
+    # ToDo: fix bug in "Complexity 3" configuration: continue on the other side of field.
+    ## Increase complexity 3:
+    for x in range(8, 21):
+        f.set_cell_state(x, 6, CellCondition.blocked)
+    for x in range(2, 6):
+        f.set_cell_state(x, 12, CellCondition.blocked)
+    for y in range(7, 12):
+        f.set_cell_state(4, y, CellCondition.blocked)
+    for y in range(1, 5):
+        f.set_cell_state(13, y, CellCondition.blocked)
 
     draw_field(f)   # draw just a field with obstacles
     print()
@@ -40,7 +51,7 @@ if __name__ == "__main__":
 
     ### Debug
     print()
-    for key, value in GLOBAL_CELL_CALL_COUNTER.items():
+    for key, value in sorted(GLOBAL_CELL_CALL_COUNTER.items()):
         print(f"{key}: {value}")
     print()
     draw_route(r)
