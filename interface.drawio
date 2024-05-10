@@ -1,0 +1,46 @@
+<mxfile host="Electron" modified="2024-05-10T07:51:23.973Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="Rx6F8vsLQI8N75vVHI53" version="24.2.5" type="device">
+  <diagram name="Страница — 1" id="YNurkjpM__piOEQWECyj">
+    <mxGraphModel dx="2261" dy="871" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-2" value="Window Title" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.containers.window;align=left;verticalAlign=top;spacingLeft=8;strokeColor2=#008cff;strokeColor3=#c4c4c4;fontColor=#666666;mainText=;fontSize=17;labelBackgroundColor=none;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="100" width="910" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="190" width="840" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-4" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.navigation.scrollBar;strokeColor=#999999;barPos=20;fillColor2=#99ddff;strokeColor2=none;direction=north;" vertex="1" parent="1">
+          <mxGeometry x="660" y="190" width="20" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-5" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.mockup.navigation.scrollBar;strokeColor=#999999;barPos=20;fillColor2=#99ddff;strokeColor2=none;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="610" width="820" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-6" value="Route calculation statistics" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.text.textBox;fontColor=#666666;align=left;fontSize=17;spacingLeft=4;spacingTop=-3;whiteSpace=wrap;strokeColor=#666666;mainText=" vertex="1" parent="1">
+          <mxGeometry x="-160" y="650" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-9" value="Calculation time:&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-160" y="680" width="230" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-10" value="Show route" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="130" y="730" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-11" value="Clear field" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="310" y="730" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-12" value="Create new field..." style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="490" y="730" width="190" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-13" value="+ Add obstacle" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="130" y="650" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-14" value="+ Add start" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="310" y="650" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t6zfiIMzgYW5g2YcHtl5-15" value="+ Add finish" style="strokeWidth=1;shadow=0;dashed=0;align=center;html=1;shape=mxgraph.mockup.buttons.button;strokeColor=#666666;fontColor=#ffffff;mainText=;buttonStyle=round;fontSize=17;fontStyle=1;fillColor=#008cff;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="490" y="650" width="150" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
