@@ -16,6 +16,7 @@ class Route:
     
     @start.setter
     def start(self, new: tuple[int, int] | Cell):
+        self.reset()
         if isinstance(new, Cell):
             self._start = new
         else:
@@ -27,6 +28,7 @@ class Route:
 
     @finish.setter
     def finish(self, new: tuple[int, int] | Cell):
+        self.reset()
         if isinstance(new, Cell):
             self._finish = new
         else:
@@ -48,7 +50,7 @@ class Route:
         """
         Position in path can be obtained by subscripting using [x][y]:
         position = subscriptable_path()[5][10]
-        Position numbers start with 1.
+        Position numbers should begin from 1.
 
         """
         if not self._subscriptable_path:
@@ -61,7 +63,7 @@ class Route:
 
     def path_position(self, x: int, y: int) -> int | bool:
         """
-        Returns position number in path by coordinates. Position numbers start with 1.
+        Returns position number in path by coordinates. Position numbers should begin from 1.
         If no such coordinates exist in path, returns False.
 
         """
@@ -84,7 +86,7 @@ class Route:
 
     def _calculate_path(self) -> list[Cell]:
         current_cell = self.start
-        path = [current_cell]
+        path = []
         blacklist = set()
 
         while True:
@@ -116,14 +118,16 @@ class Route:
     def _cell_can_be_used(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
         # check that we are not out of bounds:
         try:
-            cell = self._field(*coords)
+            cell = self.field(*coords)
         except PositionError:
             return False
+
         if cell == self.finish:
             return True
+        if cell == self.start:
+            return False
         if cell in path:
             return False
-
         # check whether this cell has been checked already or not:
         if cell in blacklist:
             return False

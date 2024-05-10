@@ -74,7 +74,6 @@ class Field:
         self.x = 0
         self.y = 0
         self._grid: list[list[Cell]] = []
-        self._routes = []
 
     def build(self, x: int = 100, y: int = 100) -> Self:
         self.x = x
@@ -112,8 +111,6 @@ class Field:
                     self(x, y).state = state
             case _:
                 raise error
-        for route in self._routes:
-            route.reset()
 
     def __call__(self, x: int, y: int) -> Cell:
         """
