@@ -1,3 +1,5 @@
+import time
+
 from .field import Cell, Field, PositionError
 
 
@@ -5,10 +7,14 @@ class Route:
     def __init__(self, field: Field, start: Cell, finish: Cell):
         self._field = field
         self._path: list[Cell] = []
-        # path represented like this: {x: {y: position_in_path_list}}:
-        self._subscriptable_path: dict[int, dict[int, int]] = {}
+        # stores path steps numbers accessible by tuple of coordinates: {(x1, y1): n1, (x1, y2): n2, (x2, y1): n2,...}
+        self._enumerated_path: dict[tuple[int, int], int] = {}
         self._start: Cell = start
         self._finish: Cell = finish
+        # stores information about how many times every cell has been called:
+        self._cell_call_statistics: dict[tuple[int, int], int] = {}
+        # how long a path has been calculated:
+        self._calculation_time: int = 0
 
     @property        
     def start(self):
@@ -20,7 +26,7 @@ class Route:
         if isinstance(new, Cell):
             self._start = new
         else:
-            self._start = self._field(*new)
+            self._start = self.field(*new)
 
     @property
     def finish(self):
@@ -32,34 +38,56 @@ class Route:
         if isinstance(new, Cell):
             self._finish = new
         else:
-            self._finish = self._field(*new)
+            self._finish = self.field(*new)
 
     @property
     def path(self) -> list[Cell]:
         """
         Calculates and returns a path from the start to the finish.
+        The path will be represented as a list of cells.
 
         :return: a list of cells representing calculated path to the finish.
         """
         if not self._path:
+            self.reset()
+            timestamp = time.time()
             self._path = self._calculate_path()
+            self._calculation_time = time.time() - timestamp
         return self._path
 
     @property
-    def subscriptable_path(self) -> dict[int, dict[int, int]]:
+    def enumerated_path(self) -> dict[tuple[int, int], int]:
         """
-        Position in path can be obtained by subscripting using [x][y]:
-        position = subscriptable_path()[5][10]
-        Position numbers should begin from 1.
+        Calculates and returns a path from the start to the finish.
+        The path will be represented as a dict of position tuples.
+        Position in path can be obtained by subscribing using (x, y):
+            position_in_path = enumerated_path[(x, y)]
+        Position numbers begin from 1.
 
         """
-        if not self._subscriptable_path:
-            self._subscriptable_path = self._cells_list_to_dict(self.path)
-        return self._subscriptable_path
+        if not self._enumerated_path:
+            self._enumerated_path = self._cells_list_to_dict(self.path)
+        return self._enumerated_path
 
     @property
     def field(self) -> Field:
         return self._field
+
+    @property
+    def calculation_time(self):
+        return self._calculation_time
+
+    @property
+    def cell_call_statistics(self):
+        return self._cell_call_statistics
+
+    def get_cell(self, x: int, y: int) -> Cell:
+        """
+        Returns field cell by coordinates.
+        Proxy function for statistics calculation purposes.
+        """
+        self._cell_call_statistics[(x, y)] = self._cell_call_statistics.get((x, y), 0) + 1
+        return self.field(x, y)
 
     def path_position(self, x: int, y: int) -> int | bool:
         """
@@ -68,21 +96,23 @@ class Route:
 
         """
         try:
-            return self.subscriptable_path[x][y]
+            return self.enumerated_path[(x, y)]
         except KeyError:
             return False
 
     def reset(self):
+        """
+        Reset all path-related information.
+
+        """
         self._path = []
-        self._subscriptable_path = {}
+        self._enumerated_path = {}
+        self._cell_call_statistics = {}
+        self._calculation_time = 0
 
     @staticmethod
-    def _cells_list_to_dict(path: list[Cell]) -> dict[int, dict[int, int]]:
-        result = {}
-        for number, cell in enumerate(path, 1):
-            result[cell.x] = result.get(cell.x, {})
-            result[cell.x][cell.y] = number
-        return result
+    def _cells_list_to_dict(path: list[Cell]) -> dict[tuple[int, int], int]:
+        return {(cell.x, cell.y): number for number, cell in enumerate(path, 1)}
 
     def _calculate_path(self) -> list[Cell]:
         current_cell = self.start
@@ -94,8 +124,6 @@ class Route:
                 return path
             # saving current sell state to check later if it was changed:
             previous_cell = current_cell
-            if current_cell == (12, 5):
-                pass
             for new_coords in (
                 (current_cell.x + 1, current_cell.y),
                 (current_cell.x, current_cell.y + 1),
@@ -105,11 +133,11 @@ class Route:
                 if self._cell_can_be_used(new_coords, path, blacklist):
                     if path[-1] != current_cell:    # to avoid duplicates when returning to previously visited cell
                         path.append(current_cell)
-                    current_cell = self._field(*new_coords)
+                    current_cell = self.get_cell(*new_coords)
                     break
                 else:
                     try:
-                        blacklist.add(self._field(*new_coords))
+                        blacklist.add(self.get_cell(*new_coords))
                     except PositionError:
                         pass
             # if we made no step forward, add current and previous cell to blacklist and make step backwards:
@@ -121,7 +149,7 @@ class Route:
     def _cell_can_be_used(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
         # check that we are not out of bounds:
         try:
-            cell = self.field(*coords)
+            cell = self.get_cell(*coords)
         except PositionError:
             return False
 

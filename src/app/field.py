@@ -1,11 +1,6 @@
 from enum import Enum
 from typing import overload, Self
 
-### Debug:
-from . import GLOBAL_CELL_CALL_COUNTER
-GLOBAL_CELL_CALL_COUNTER = GLOBAL_CELL_CALL_COUNTER
-###
-
 
 class PositionError(Exception): pass
 
@@ -42,20 +37,12 @@ class Cell:
         return self.state == CellCondition.passable
 
     def __eq__(self, other: tuple[int, int] | Self):
-        ### Debug
-        # global GLOBAL_COUNTER
-        # GLOBAL_COUNTER[(self._x, self._y)] = GLOBAL_COUNTER.get((self._x, self._y), 0) + 1
-        ###
         if isinstance(other, Cell):
             return self() == other()
         else:
             return self() == other
 
     def __call__(self, *args, **kwargs) -> tuple[int, int]:
-        ### Debug
-        global GLOBAL_CELL_CALL_COUNTER
-        GLOBAL_CELL_CALL_COUNTER[(self._x, self._y)] = GLOBAL_CELL_CALL_COUNTER.get((self._x, self._y), 0) + 1
-        ###
         return self.x, self.y
 
     def __hash__(self):

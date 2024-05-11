@@ -1,8 +1,5 @@
 #!/usr/bin/env python3.12
 
-### Debug
-from app import GLOBAL_CELL_CALL_COUNTER
-###
 from app.field import Field, CellCondition
 from app.output import draw_field, draw_route
 from app.route import Route
@@ -60,12 +57,13 @@ if __name__ == "__main__":
 
 
     ### Debug:
-    print()
-    for key, value in sorted(GLOBAL_CELL_CALL_COUNTER.items()):
+    print("Route internal statistics:")
+    for key, value in sorted(r.cell_call_statistics.items()):
         print(f"{key}: {value}")
     print()
     draw_route(r)
     print()
+    print("Calculation time:", r.calculation_time)
     ###
 
 
