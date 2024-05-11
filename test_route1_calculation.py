@@ -2,8 +2,8 @@ import signal
 from unittest import TestCase
 
 from src.app.field import Field, CellCondition
-from src.app.output import draw_route
-from src.app.route import Route
+from src.app.console_output import draw_route
+from src.app.route_1 import Route1
 
 
 DEFAULT_TIMEOUT = 1
@@ -46,42 +46,42 @@ class TestRouteDrawTime(TestCase):
         self.field.set_cell_state((3, 4), (5, 4), (3, 3), (5, 3), CellCondition.blocked)
 
     def test_from_left_top_to_right_bottom(self):
-        r = Route(self.field, self.field(4, 4), self.field(16, 12))
+        r = Route1(self.field, self.field(4, 4), self.field(16, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
     def test_from_left_top_to_right_bottom_increased_complexity_8_19_regular_route(self):
         for x in range(8, 19):
             self.field.set_cell_state(x, 6, CellCondition.blocked)
-        r = Route(self.field, self.field(4, 4), self.field(16, 12))
+        r = Route1(self.field, self.field(4, 4), self.field(16, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
     def test_from_left_top_to_right_bottom_increased_complexity_8_21_regular_route(self):
         for x in range(8, 21):
             self.field.set_cell_state(x, 6, CellCondition.blocked)
-        r = Route(self.field, self.field(4, 4), self.field(16, 12))
+        r = Route1(self.field, self.field(4, 4), self.field(16, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
     def test_from_right_bottom_to_left_top_reversed_route(self):
         for x in range(8, 19):
             self.field.set_cell_state(x, 6, CellCondition.blocked)
-        r = Route(self.field, self.field(16, 12), self.field(4, 4))
+        r = Route1(self.field, self.field(16, 12), self.field(4, 4))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
     def test_from_left_top_to_middle_increased_complexity_8_19_regular_route(self):
         for x in range(8, 19):
             self.field.set_cell_state(x, 6, CellCondition.blocked)
-        r = Route(self.field, self.field(4, 4), self.field(6, 12))
+        r = Route1(self.field, self.field(4, 4), self.field(6, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
     def test_from_left_top_to_middle_increased_complexity_8_21_regular_route(self):
         for x in range(8, 21):
             self.field.set_cell_state(x, 6, CellCondition.blocked)
-        r = Route(self.field, self.field(4, 4), self.field(6, 12))
+        r = Route1(self.field, self.field(4, 4), self.field(6, 12))
         with RunTimeout(DEFAULT_TIMEOUT):
             draw_route(r)
 
@@ -108,5 +108,5 @@ class TestRouteMisc(TestCase):
             self.field.set_cell_state(4, y, CellCondition.blocked)
         for y in range(1, 5):
             self.field.set_cell_state(13, y, CellCondition.blocked)
-        r = Route(self.field, self.field(6, 12), self.field(4, 4))
+        r = Route1(self.field, self.field(6, 12), self.field(4, 4))
         assert len(r.path) == len(set(r.path))

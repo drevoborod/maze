@@ -1,5 +1,5 @@
 from .field import CellCondition, Field
-from .route import Route
+from .base_route import BaseRoute
 
 
 CELL_TEMPLATE = "[{:<3}]"
@@ -31,7 +31,7 @@ def draw_field(f: Field):
         print()
 
 
-def draw_route(route: Route):
+def draw_route(route: BaseRoute):
     _draw_x_coordinates_row(route.field)
     for number, row in enumerate(route.field, 1):
         print(Y_NUMBER.format(number), end="")
