@@ -5,7 +5,8 @@ from .field import Cell, Field, PositionError
 
 
 class BaseRoute:
-    def __init__(self, field: Field, start: Cell, finish: Cell):
+    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = None):
+        self._name: str = name
         self._field = field
         self._path: list[Cell] = []
         # stores path steps numbers accessible by tuple of coordinates: {(x1, y1): n1, (x1, y2): n2, (x2, y1): n2,...}
@@ -17,7 +18,21 @@ class BaseRoute:
         # how long a path has been calculated:
         self._calculation_time: int = 0
 
-    @property        
+    @property
+    def name(self):
+        """
+        Custom route implementation name.
+
+        """
+        if not self._name:
+            self._name = self.__class__.__qualname__
+        return self._name
+
+    @name.setter
+    def name(self, new_name):
+        self._name = new_name
+
+    @property
     def start(self):
         return self._start
     

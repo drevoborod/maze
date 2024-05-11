@@ -64,6 +64,7 @@ if __name__ == "__main__":
     draw_route(r)
     print()
     print("Calculation time:", r.calculation_time)
+    print(r.name)
     ###
 
 

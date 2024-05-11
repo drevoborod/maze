@@ -1,11 +1,15 @@
 from .base_route import BaseRoute
-from .field import Cell, PositionError
+from .field import Cell, Field, PositionError
 
 
 class Route1(BaseRoute):
     """
     First demo implementation of route calculation algorithm.
     """
+
+    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = "Demo route implementation"):
+        super().__init__(field=field, start=start, finish=finish, name=name)
+
     def _calculate_path(self) -> list[Cell]:
         current_cell = self.start
         path = [current_cell]
