@@ -36,25 +36,8 @@ class Route1(BaseRoute):
                         blacklist.add(self.get_cell(*new_coords))
                     except PositionError:
                         pass
-            # if we made no step forward, add current and previous cell to blacklist and make step backwards:
+            # if we made no step forwards, add current and previous cell to blacklist and make step backwards:
             if previous_cell is current_cell:
                 blacklist.add(current_cell)
                 blacklist.add(path.pop())
                 current_cell = path[-1]
-
-    def _cell_can_be_used(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
-        # check that we are not out of bounds:
-        try:
-            cell = self.get_cell(*coords)
-        except PositionError:
-            return False
-
-        if cell == self.finish:
-            return True
-        if cell in path:
-            return False
-        # check whether this cell has been checked already or not:
-        if cell in blacklist:
-            return False
-        if cell.passable:
-            return True

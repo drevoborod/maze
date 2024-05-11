@@ -130,6 +130,32 @@ class BaseRoute:
     def _cells_list_to_dict(path: list[Cell]) -> dict[tuple[int, int], int]:
         return {(cell.x, cell.y): number for number, cell in enumerate(path, 1)}
 
+    def _cell_can_be_used(self, coords: tuple[int, int], path: list[Cell], blacklist: set[Cell]) -> bool:
+        """
+        Returns True if cell in provided coordinates can be used in path or if it's finish.
+        The start cell can be used in a path, so there is no check if the cell is the start itself.
+
+        :param coords: (x, y) of a cell to check.
+        :param path: list of cells - currently built part of a path.
+        :param blacklist: set of cells: current blacklist of cells which should not be used.
+        :return: True if cell can be used or is finis, False otherwise.
+        """
+        # check that we are not out of bounds:
+        try:
+            cell = self.get_cell(*coords)
+        except PositionError:
+            return False
+
+        if cell == self.finish:
+            return True
+        if cell in path:
+            return False
+        # check whether this cell has been checked already or not:
+        if cell in blacklist:
+            return False
+        if cell.passable:
+            return True
+
     @abstractmethod
     def _calculate_path(self) -> list[Cell]:
         """
