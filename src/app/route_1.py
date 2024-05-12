@@ -1,4 +1,4 @@
-from .base_route import BaseRoute
+from .base_route import BaseRoute, UnreachableFinishError
 from .field import Cell, Field, PositionError
 
 
@@ -40,4 +40,7 @@ class Route1(BaseRoute):
             if previous_cell is current_cell:
                 blacklist.add(current_cell)
                 blacklist.add(path.pop())
-                current_cell = path[-1]
+                try:
+                    current_cell = path[-1]
+                except IndexError:
+                    raise UnreachableFinishError

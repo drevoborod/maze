@@ -1,6 +1,6 @@
 import random
 
-from .base_route import BaseRoute
+from .base_route import BaseRoute, UnreachableFinishError
 from .field import Cell, PositionError
 
 
@@ -98,5 +98,8 @@ class Route2(BaseRoute):
                 # if we made no step forwards, add current and previous cells to blacklist and make step backwards:
                 blacklist.add(current_cell)
                 blacklist.add(path.pop())
-                current_cell = path[-1]
+                try:
+                    current_cell = path[-1]
+                except IndexError:
+                    raise UnreachableFinishError
 
