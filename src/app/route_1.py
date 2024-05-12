@@ -36,7 +36,7 @@ class Route1(BaseRoute):
                         blacklist.add(self.get_cell(*new_coords))
                     except PositionError:
                         pass
-            # if we made no step forwards, add current and previous cell to blacklist and make step backwards:
+            # if we made no step forwards, add current and previous cells to blacklist and make step backwards:
             if previous_cell is current_cell:
                 blacklist.add(current_cell)
                 blacklist.add(path.pop())
