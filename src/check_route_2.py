@@ -7,7 +7,7 @@ from app.route_2 import Route2
 
 if __name__ == "__main__":
     ## Creating game field:
-    f = Field().build(100, 100)
+    f = Field().build(20, 20)
 
     ## Placing obstacles on the field:
     f.set_cell_state((3, 4), (5, 4), (3, 3), (5, 3), CellCondition.blocked)
@@ -48,8 +48,8 @@ if __name__ == "__main__":
     # Regular route 2:
     # r = Route2(f, f(4, 4), f(6, 12))
     # Reversed route:
-    # r = Route2(f, f(16, 12), f(4, 4))
-    r = Route2(f, f(16, 12), f(3, 11))
+    r = Route2(f, f(16, 12), f(4, 4))
+    # r = Route2(f, f(16, 12), f(3, 11))
     # Reversed route 2:
     # r = Route2(f, f(6, 12), f(4, 4))
     # Reversed x route 1:

@@ -26,29 +26,31 @@ class Route2(BaseRoute):
             # find out in which direction the closest path to the finish lays:
             x_diff = current_cell.x - self.finish.x
             y_diff = current_cell.y - self.finish.y
-            if x_diff == 0:
+            if x_diff == 0:     # if the finish is on the same x-asis
                 if y_diff > 0:
                     new_coords_prioritized.append((current_cell.x, current_cell.y - 1))
-                    new_coords_prioritized.append((current_cell.x, current_cell.y + 1))
+                    last = (current_cell.x, current_cell.y + 1)
                 else:
                     new_coords_prioritized.append((current_cell.x, current_cell.y + 1))
-                    new_coords_prioritized.append((current_cell.x, current_cell.y - 1))
+                    last = (current_cell.x, current_cell.y - 1)
                 additional = [current_cell.x + 1, current_cell.x - 1]
                 random.shuffle(additional)  # let the fate decide :)
                 new_coords_prioritized.append((additional[0], current_cell.y))
                 new_coords_prioritized.append((additional[1], current_cell.y))
-            elif y_diff == 0:
+                new_coords_prioritized.append(last)
+            elif y_diff == 0:   # if the finish is on the same y-asis
                 if x_diff > 0:
                     new_coords_prioritized.append((current_cell.x - 1, current_cell.y))
-                    new_coords_prioritized.append((current_cell.x + 1, current_cell.y))
+                    last = (current_cell.x + 1, current_cell.y)
                 else:
                     new_coords_prioritized.append((current_cell.x + 1, current_cell.y))
-                    new_coords_prioritized.append((current_cell.x - 1, current_cell.y))
+                    last = (current_cell.x - 1, current_cell.y)
                 additional = [current_cell.y + 1, current_cell.y - 1]
                 random.shuffle(additional)
                 new_coords_prioritized.append((current_cell.x, additional[0]))
                 new_coords_prioritized.append((current_cell.x, additional[1]))
-            elif abs(x_diff) > abs(y_diff):
+                new_coords_prioritized.append(last)
+            elif abs(x_diff) > abs(y_diff):     # if x-asis distance is bigger
                 if x_diff > 0:
                     new_coords_prioritized.append((current_cell.x - 1, current_cell.y))
                     additional = [(current_cell.x + 1, current_cell.y)]
@@ -64,7 +66,7 @@ class Route2(BaseRoute):
                 random.shuffle(additional)
                 new_coords_prioritized.append(additional[0])
                 new_coords_prioritized.append(additional[1])
-            else:
+            else:   # if y-asis distance is bigger
                 if y_diff > 0:
                     new_coords_prioritized.append((current_cell.x, current_cell.y - 1))
                     additional = [(current_cell.x, current_cell.y + 1)]
@@ -73,7 +75,7 @@ class Route2(BaseRoute):
                     additional = [(current_cell.x, current_cell.y - 1)]
                 if x_diff > 0:
                     new_coords_prioritized.append((current_cell.x - 1, current_cell.y))
-                    additional.append((current_cell.x + 1, current_cell.y + 1))
+                    additional.append((current_cell.x + 1, current_cell.y))
                 else:
                     new_coords_prioritized.append((current_cell.x + 1, current_cell.y))
                     additional.append((current_cell.x - 1, current_cell.y))
