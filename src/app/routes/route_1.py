@@ -1,5 +1,5 @@
-from .base_route import BaseRoute, UnreachableFinishError
-from .field import Cell, Field, PositionError
+from ..core.base_route import BaseRoute, UnreachableFinishError
+from ..core.field import Cell, Field, PositionError
 
 
 class Route1(BaseRoute):

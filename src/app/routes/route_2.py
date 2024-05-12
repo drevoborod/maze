@@ -1,7 +1,7 @@
 import random
 
-from .base_route import BaseRoute, UnreachableFinishError
-from .field import Cell, PositionError
+from ..core.base_route import BaseRoute, UnreachableFinishError
+from ..core.field import Cell, PositionError
 
 
 class Route2(BaseRoute):

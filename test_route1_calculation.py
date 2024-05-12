@@ -1,9 +1,9 @@
 import signal
 from unittest import TestCase
 
-from src.app.field import Field, CellCondition
+from src.app.core.field import Field, CellCondition
 from src.app.console_output import draw_route
-from src.app.route_1 import Route1
+from src.app.routes.route_1 import Route1
 
 
 DEFAULT_TIMEOUT = 1
@@ -34,7 +34,7 @@ class RunTimeout:
 # ToDo: replace with pytest-based realization and use its parametrization.
 class TestRouteDrawTime(TestCase):
     """
-    Tests how long route is being drawn.
+    Check that route calculation does not exceed time limit.
 
     """
     def setUp(self):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.12
 
-from app.field import Field, CellCondition
+from app.core.field import Field, CellCondition
 from app.console_output import draw_field, draw_route
-from app.route_1 import Route1
+from app.routes.route_1 import Route1
 
 
 if __name__ == "__main__":
