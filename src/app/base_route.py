@@ -4,6 +4,9 @@ from abc import abstractmethod
 from .field import Cell, Field, PositionError
 
 
+class UnreachableFinishError(Exception): pass
+
+
 class BaseRoute:
     def __init__(self, field: Field, start: Cell, finish: Cell, name: str = None):
         self._name: str = name
@@ -17,6 +20,7 @@ class BaseRoute:
         self._cell_call_statistics: dict[tuple[int, int], int] = {}
         # how long a path has been calculated:
         self._calculation_time: int = 0
+        self._error = None
 
     @property
     def name(self):
@@ -64,10 +68,13 @@ class BaseRoute:
 
         :return: a list of cells representing calculated path to the finish.
         """
-        if not self._path:
+        if not self._path and not self._error:
             self.reset()
             timestamp = time.time()
-            self._path = self._calculate_path()
+            try:
+                self._path = self._calculate_path()
+            except UnreachableFinishError:
+                self._error = UnreachableFinishError("Unable to calculate route: finish is unreachable.")
             self._calculation_time = time.time() - timestamp
         return self._path
 
@@ -97,6 +104,10 @@ class BaseRoute:
     def cell_call_statistics(self):
         return self._cell_call_statistics
 
+    @property
+    def last_error(self):
+        return self._error
+
     def get_cell(self, x: int, y: int) -> Cell:
         """
         Returns field cell by coordinates.
@@ -125,6 +136,7 @@ class BaseRoute:
         self._enumerated_path = {}
         self._cell_call_statistics = {}
         self._calculation_time = 0
+        self._error = None
 
     @staticmethod
     def _cells_list_to_dict(path: list[Cell]) -> dict[tuple[int, int], int]:
@@ -160,6 +172,7 @@ class BaseRoute:
     def _calculate_path(self) -> list[Cell]:
         """
         Method should calculate path and return its representation as a list of cells.
+        If finish cannot be reached, UnreachableFinishError should be raised.
 
         """
         raise NotImplementedError

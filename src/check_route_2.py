@@ -10,6 +10,7 @@ if __name__ == "__main__":
     f = Field().build(20, 20)
 
     ## Placing obstacles on the field:
+    # f.set_cell_state((3, 4), (5, 4), (4, 3), (3, 3), (5, 3), CellCondition.blocked)    # no path to the finish on (4, 4)
     f.set_cell_state((3, 4), (5, 4), (3, 3), (5, 3), CellCondition.blocked)
     for x in range(3, 6):
         f.set_cell_state(x, 5, CellCondition.blocked)
@@ -44,11 +45,11 @@ if __name__ == "__main__":
 
     ## Creating route:
     # Regular route:
-    # r = Route2(f, f(4, 4), f(16, 12))
+    r = Route2(f, f(4, 4), f(16, 12))
     # Regular route 2:
     # r = Route2(f, f(4, 4), f(6, 12))
     # Reversed route:
-    r = Route2(f, f(16, 12), f(4, 4))
+    # r = Route2(f, f(16, 12), f(4, 4))
     # r = Route2(f, f(16, 12), f(3, 11))
     # Reversed route 2:
     # r = Route2(f, f(6, 12), f(4, 4))
@@ -71,6 +72,7 @@ if __name__ == "__main__":
     print()
     print("Calculation time:", r.calculation_time)
     print(r.name)
+    print(r.last_error)
     ###
 
 

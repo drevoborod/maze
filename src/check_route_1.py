@@ -10,6 +10,7 @@ if __name__ == "__main__":
     f = Field().build(20, 20)
 
     ## Placing obstacles on the field:
+    # f.set_cell_state((3, 4), (5, 4), (4, 3), (3, 3), (5, 3), CellCondition.blocked)
     f.set_cell_state((3, 4), (5, 4), (3, 3), (5, 3), CellCondition.blocked)
     for x in range(3, 6):
         f.set_cell_state(x, 5, CellCondition.blocked)
