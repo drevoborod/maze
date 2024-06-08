@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.12
 
 from app.core.field import Field, CellCondition
-from app.console_output import draw_field, draw_route
+from app.console_output import draw_field, draw_route, print_current_path
 from app.routes.route_1 import Route1
 
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     ## Creating route:
     # Regular route:
-    r = Route1(f, f(4, 4), f(16, 12))
+    r = Route1(f, f(4, 4), f(16, 12), calculation_callback=print_current_path)
     # Regular route 2:
     # r = Route1(f, f(4, 4), f(6, 12))
     # Reversed route:

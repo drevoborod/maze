@@ -1,5 +1,6 @@
 import time
 from abc import abstractmethod
+from typing import Callable
 
 from .field import Cell, Field, PositionError
 
@@ -8,8 +9,11 @@ class UnreachableFinishError(Exception): pass
 
 
 class BaseRoute:
-    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = None):
+    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = None,
+                 calculation_callback: Callable[[list[Cell]], ...] = None):
         self._name: str = name
+        # a function which should be called on every path calculation algorithm step:
+        self._calculation_callback = calculation_callback
         self._field = field
         self._path: list[Cell] = []
         # stores path steps numbers accessible by tuple of coordinates: {(x1, y1): n1, (x1, y2): n2, (x2, y1): n2,...}
@@ -72,7 +76,7 @@ class BaseRoute:
             self.reset()
             timestamp = time.time()
             try:
-                self._path = self._calculate_path()
+                self._path = self._calculate_path(self._calculation_callback)
             except UnreachableFinishError:
                 self._error = UnreachableFinishError("Unable to calculate route: finish is unreachable.")
             self._calculation_time = time.time() - timestamp
@@ -169,10 +173,12 @@ class BaseRoute:
             return True
 
     @abstractmethod
-    def _calculate_path(self) -> list[Cell]:
+    def _calculate_path(self, callback: Callable[[list[Cell]], ...] | None) -> list[Cell]:
         """
         Method should calculate path and return its representation as a list of cells.
         If finish cannot be reached, UnreachableFinishError should be raised.
+        :param callback: optional argument: a function which should accept list of Cell instances (actual path).
+            Probably can be called on every search algorithm iteration to show current state of the path.
 
         """
         raise NotImplementedError

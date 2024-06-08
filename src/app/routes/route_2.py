@@ -1,4 +1,5 @@
 import random
+from contextlib import suppress
 
 from ..core.base_route import BaseRoute, UnreachableFinishError
 from ..core.field import Cell, PositionError
@@ -8,10 +9,10 @@ class Route2(BaseRoute):
     """
     Second optimised implementation of route calculation algorithm.
     """
-    def __init__(self, *args):
-        super().__init__(*args, name="Second algorithm implementation")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, name="Second algorithm implementation", **kwargs)
 
-    def _calculate_path(self) -> list[Cell]:
+    def _calculate_path(self, callback=None) -> list[Cell]:
         current_cell = self.start
         path = [current_cell]
         blacklist = set()
@@ -19,6 +20,9 @@ class Route2(BaseRoute):
         while True:
             if self.finish == current_cell:
                 return path
+
+            if callback:
+                callback(path)
 
             # potential new cells ranged by priority:
             new_coords_prioritized: list[tuple[int, int]] = []
@@ -90,10 +94,8 @@ class Route2(BaseRoute):
                     current_cell = self.get_cell(*new_coords)
                     break
                 else:
-                    try:
+                    with suppress(PositionError):
                         blacklist.add(self.get_cell(*new_coords))
-                    except PositionError:
-                        pass
             else:
                 # if we made no step forwards, add current and previous cells to blacklist and make step backwards:
                 blacklist.add(current_cell)

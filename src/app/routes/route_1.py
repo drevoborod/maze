@@ -7,10 +7,11 @@ class Route1(BaseRoute):
     First demo implementation of route calculation algorithm.
     """
 
-    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = "Demo route implementation"):
-        super().__init__(field=field, start=start, finish=finish, name=name)
+    def __init__(self, field: Field, start: Cell, finish: Cell, name: str = "Demo route implementation",
+                 calculation_callback=None):
+        super().__init__(field=field, start=start, finish=finish, name=name, calculation_callback=calculation_callback)
 
-    def _calculate_path(self) -> list[Cell]:
+    def _calculate_path(self, callback=None) -> list[Cell]:
         current_cell = self.start
         path = [current_cell]
         blacklist = set()
@@ -18,6 +19,8 @@ class Route1(BaseRoute):
         while True:
             if self.finish == current_cell:
                 return path
+            if callback:
+                callback(path)
             # saving current sell state to check later if it was changed:
             previous_cell = current_cell
             for new_coords in (

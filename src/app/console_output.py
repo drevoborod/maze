@@ -1,4 +1,4 @@
-from .core.field import CellCondition, Field
+from .core.field import Cell, CellCondition, Field
 from .core.base_route import BaseRoute
 
 
@@ -46,3 +46,7 @@ def draw_route(route: BaseRoute):
                 point = FIELD_CELLS[cell.state]
             print(point, end="")
         print()
+
+
+def print_current_path(path: list[Cell]):
+    print(f"Current path: {', '.join(map(str, path))}")

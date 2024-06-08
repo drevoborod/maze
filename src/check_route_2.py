@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.12
 
 from app.core.field import Field, CellCondition
-from app.console_output import draw_route
+from app.console_output import draw_route, print_current_path
 from app.routes.route_2 import Route2
 
 
@@ -39,13 +39,19 @@ if __name__ == "__main__":
     for y in range(1, 5):
         f.set_cell_state(13, y, CellCondition.blocked)
 
+    # Add dead end:
+    for x in range(15, 18):
+        f.set_cell_state(x, 4, CellCondition.blocked)
+    f.set_cell_state(17, 5, CellCondition.blocked)
+
     ## Drawing just a field with obstacles:
     # draw_field(f)
     # print()
 
     ## Creating route:
     # Regular route:
-    r = Route2(f, f(4, 4), f(16, 12))
+    # r = Route2(f, f(4, 4), f(16, 12))
+    r = Route2(f, f(4, 4), f(16, 12), calculation_callback=print_current_path)
     # Regular route 2:
     # r = Route2(f, f(4, 4), f(6, 12))
     # Reversed route:
